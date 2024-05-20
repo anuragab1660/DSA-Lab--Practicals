@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+
+// Define the maximum size of the queue
+#define MAX_SIZE 100
+
+// Class representing the queue
+class Queue {
+private:
+    int front, rear; // Index of front and rear elements
+    int arr[MAX_SIZE]; // Array to store queue elements
+
+public:
+    // Constructor
+    Queue() {
+        front = -1; // Initialize front to -1 indicating empty queue
+        rear = -1; // Initialize rear to -1 indicating empty queue
+    }
+
+    // Function to check if the queue is empty
+    bool isEmpty() {
+        return (front == -1 && rear == -1);
+    }
+
+    // Function to check if the queue is full
+    bool isFull() {
+        return (rear == MAX_SIZE - 1);
+    }
+
+    // Function to insert an element into the queue
+    void insert(int value) {
+        if (isFull()) {
+            cout << "Queue Overflow! Cannot insert element " << value << endl;
+            return;
+        } else if (isEmpty()) {
+            front = rear = 0;
+        } else {
+            ++rear;
+        }
+        arr[rear] = value;
+        cout << "Element " << value << " inserted into queue." << endl;
+    }
+
+    // Function to delete an element from the queue
+    int remove() {
+        if (isEmpty()) {
+            cout << "Queue Underflow! Cannot remove element." << endl;
+            return -1;
+        }
+        int removedElement = arr[front];
+        if (front == rear) {
+            // Queue has only one element
+            front = rear = -1;
+        } else {
+            ++front;
+        }
+        cout << "Element " << removedElement << " removed from queue." << endl;
+        return removedElement;
+    }
+
+    // Function to display the elements of the queue
+    void display() {
+        if (isEmpty()) {
+            cout << "Queue is empty!" << endl;
+            return;
+        }
+        cout << "Elements in the queue: ";
+        for (int i = front; i <= rear; ++i) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    Queue q;
+
+    q.insert(10);
+    q.insert(20);
+    q.insert(30);
+    q.insert(40);
+
+    q.display();
+
+    q.remove();
+    q.display();
+
+    return 0;
+}

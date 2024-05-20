@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+// Node structure for the stack
+struct Node {
+    int data;
+    Node* next;
+
+    // Constructor
+    Node(int val) : data(val), next(nullptr) {}
+};
+
+// Class representing the stack
+class Stack {
+private:
+    Node* top; // Pointer to the top of the stack
+
+public:
+    // Constructor
+    Stack() : top(nullptr) {}
+
+    // Function to check if the stack is empty
+    bool isEmpty() {
+        return (top == nullptr);
+    }
+
+    // Function to push an element onto the stack
+    void push(int val) {
+        Node* newNode = new Node(val);
+        newNode->next = top;
+        top = newNode;
+        cout << "Pushed " << val << " onto the stack." << endl;
+    }
+
+    // Function to pop an element from the stack
+    int pop() {
+        if (isEmpty()) {
+            cout << "Stack Underflow! Cannot pop element." << endl;
+            return -1;
+        }
+        int poppedElement = top->data;
+        Node* temp = top;
+        top = top->next;
+        delete temp;
+        cout << "Popped " << poppedElement << " from the stack." << endl;
+        return poppedElement;
+    }
+
+    // Function to peek at the top element of the stack
+    int peek() {
+        if (isEmpty()) {
+            cout << "Stack is empty! Cannot peek." << endl;
+            return -1;
+        }
+        return top->data;
+    }
+};
+
+int main() {
+    Stack stack;
+
+    stack.push(10);
+    stack.push(20);
+    stack.push(30);
+
+    cout << "Top element: " << stack.peek() << endl;
+
+    stack.pop();
+    stack.pop();
+    stack.pop();
+    stack.pop(); // This will demonstrate stack underflow
+
+    return 0;
+}

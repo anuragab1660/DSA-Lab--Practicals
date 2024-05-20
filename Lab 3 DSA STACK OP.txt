@@ -1,0 +1,70 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+    stack<int> s;
+    int choice, value;
+
+    do {
+        cout << "\nStack Operations Menu:";
+        cout << "\n1. Push";
+        cout << "\n2. Pop";
+        cout << "\n3. Peek";
+        cout << "\n4. Change";
+        cout << "\n5. Display";
+        cout << "\n6. Exit";
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter value to push: ";
+                cin >> value;
+                s.push(value);
+                cout << "Element " << value << " pushed to stack." << endl;
+                break;
+            case 2:
+                if (!s.empty()) {
+                    cout << "Element " << s.top() << " popped from stack." << endl;
+                    s.pop();
+                } else {
+                    cout << "Stack is empty! Cannot pop." << endl;
+                }
+                break;
+            case 3:
+                if (!s.empty()) {
+                    cout << "Top element of stack: " << s.top() << endl;
+                } else {
+                    cout << "Stack is empty! Cannot peek." << endl;
+                }
+                break;
+            case 4:
+                if (!s.empty()) {
+                    cout << "Enter new value for top element: ";
+                    cin >> value;
+                    s.top() = value;
+                    cout << "Top element changed to " << value << endl;
+                } else {
+                    cout << "Stack is empty! Cannot change top element." << endl;
+                }
+                break;
+            case 5:
+                cout << "Stack elements: ";
+                while (!s.empty()) {
+                    cout << s.top() << " ";
+                    s.pop();
+                }
+                cout << endl;
+                break;
+            case 6:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please enter again." << endl;
+                break;
+        }
+    } while (choice != 6);
+
+    return 0;
+}

@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+
+// Node structure for a doubly linked list
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+
+    // Constructor
+    Node(int val) : data(val), prev(nullptr), next(nullptr) {}
+};
+
+// Class representing a doubly linked list
+class DoublyLinkedList {
+private:
+    Node* head; // Pointer to the head of the linked list
+    Node* tail; // Pointer to the tail of the linked list
+
+public:
+    // Constructor
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+
+    // Function to insert a node at the front of the linked list
+    void insertAtFront(int val) {
+        Node* newNode = new Node(val);
+        if (head == nullptr) {
+            head = tail = newNode;
+        } else {
+            newNode->next = head;
+            head->prev = newNode;
+            head = newNode;
+        }
+        cout << "Inserted " << val << " at the front of the linked list." << endl;
+    }
+
+    // Function to insert a node at the end of the linked list
+    void insertAtEnd(int val) {
+        Node* newNode = new Node(val);
+        if (head == nullptr) {
+            head = tail = newNode;
+        } else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+        cout << "Inserted " << val << " at the end of the linked list." << endl;
+    }
+
+    // Function to display the linked list forward
+    void displayForward() {
+        if (head == nullptr) {
+            cout << "Linked list is empty." << endl;
+            return;
+        }
+        cout << "Linked list forward: ";
+        Node* temp = head;
+        while (temp != nullptr) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    // Function to display the linked list backward
+    void displayBackward() {
+        if (tail == nullptr) {
+            cout << "Linked list is empty." << endl;
+            return;
+        }
+        cout << "Linked list backward: ";
+        Node* temp = tail;
+        while (temp != nullptr) {
+            cout << temp->data << " ";
+            temp = temp->prev;
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    DoublyLinkedList dll;
+
+    dll.insertAtFront(10);
+    dll.insertAtFront(20);
+    dll.displayForward();
+    dll.displayBackward();
+
+    dll.insertAtEnd(30);
+    dll.insertAtEnd(40);
+    dll.displayForward();
+    dll.displayBackward();
+
+    return 0;
+}

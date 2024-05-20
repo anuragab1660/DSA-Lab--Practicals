@@ -1,0 +1,112 @@
+#include <iostream>
+using namespace std;
+
+// Node structure for a doubly linked list
+struct Node {
+    int data;
+    Node* prev;
+    Node* next;
+
+    // Constructor
+    Node(int val) : data(val), prev(nullptr), next(nullptr) {}
+};
+
+// Class representing a doubly linked list
+class DoublyLinkedList {
+private:
+    Node* head; // Pointer to the head of the linked list
+    Node* tail; // Pointer to the tail of the linked list
+
+public:
+    // Constructor
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+
+    // Function to insert a node at the front of the linked list
+    void insertAtFront(int val) {
+        Node* newNode = new Node(val);
+        if (head == nullptr) {
+            head = tail = newNode;
+        } else {
+            newNode->next = head;
+            head->prev = newNode;
+            head = newNode;
+        }
+        cout << "Inserted " << val << " at the front of the linked list." << endl;
+    }
+
+    // Function to display the linked list forward
+    void displayForward() {
+        if (head == nullptr) {
+            cout << "Linked list is empty." << endl;
+            return;
+        }
+        cout << "Linked list forward: ";
+        Node* temp = head;
+        while (temp != nullptr) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    // Function to delete the last node of the linked list
+    void deleteLastNode() {
+        if (tail == nullptr) {
+            cout << "Linked list is empty. Nothing to delete." << endl;
+            return;
+        }
+        if (head == tail) {
+            delete tail;
+            head = tail = nullptr;
+        } else {
+            Node* temp = tail;
+            tail = tail->prev;
+            tail->next = nullptr;
+            delete temp;
+        }
+        cout << "Last node deleted from the linked list." << endl;
+    }
+
+    // Function to delete the node before a specified position
+    void deleteNodeBeforePosition(int pos) {
+        if (head == nullptr || head->next == nullptr || pos <= 2) {
+            cout << "Invalid operation. Nothing to delete." << endl;
+            return;
+        }
+        Node* curr = head;
+        int count = 1;
+        while (curr->next != nullptr && count < pos - 1) {
+            curr = curr->next;
+            ++count;
+        }
+        if (curr == head) {
+            cout << "Cannot delete node before position " << pos << ". No node exists before it." << endl;
+            return;
+        }
+        Node* temp = curr->prev;
+        curr->prev = temp->prev;
+        temp->prev->next = curr;
+        delete temp;
+        cout << "Node before position " << pos << " deleted from the linked list." << endl;
+    }
+};
+
+int main() {
+    DoublyLinkedList dll;
+
+    dll.insertAtFront(10);
+    dll.insertAtFront(20);
+    dll.displayForward();
+
+    dll.deleteLastNode();
+    dll.displayForward();
+
+    dll.insertAtFront(30);
+    dll.insertAtFront(40);
+    dll.displayForward();
+
+    dll.deleteNodeBeforePosition(3);
+    dll.displayForward();
+
+    return 0;
+}

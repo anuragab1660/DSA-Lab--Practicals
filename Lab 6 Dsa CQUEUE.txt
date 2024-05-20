@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+
+// Define the maximum size of the circular queue
+#define MAX_SIZE 5
+
+// Class representing the circular queue
+class CircularQueue {
+private:
+    int front, rear; // Index of front and rear elements
+    int arr[MAX_SIZE]; // Array to store circular queue elements
+
+public:
+    // Constructor
+    CircularQueue() {
+        front = rear = -1; // Initialize front and rear to -1 indicating empty queue
+    }
+
+    // Function to check if the circular queue is empty
+    bool isEmpty() {
+        return (front == -1 && rear == -1);
+    }
+
+    // Function to check if the circular queue is full
+    bool isFull() {
+        return (front == (rear + 1) % MAX_SIZE);
+    }
+
+    // Function to insert an element into the circular queue
+    void insert(int value) {
+        if (isFull()) {
+            cout << "Circular Queue Overflow! Cannot insert element " << value << endl;
+            return;
+        } else if (isEmpty()) {
+            front = rear = 0;
+        } else {
+            rear = (rear + 1) % MAX_SIZE;
+        }
+        arr[rear] = value;
+        cout << "Element " << value << " inserted into circular queue." << endl;
+    }
+
+    // Function to delete an element from the circular queue
+    int remove() {
+        if (isEmpty()) {
+            cout << "Circular Queue Underflow! Cannot remove element." << endl;
+            return -1;
+        }
+        int removedElement = arr[front];
+        if (front == rear) {
+            // Circular queue has only one element
+            front = rear = -1;
+        } else {
+            front = (front + 1) % MAX_SIZE;
+        }
+        cout << "Element " << removedElement << " removed from circular queue." << endl;
+        return removedElement;
+    }
+
+    // Function to display the elements of the circular queue
+    void display() {
+        if (isEmpty()) {
+            cout << "Circular Queue is empty!" << endl;
+            return;
+        }
+        cout << "Elements in the circular queue: ";
+        int i = front;
+        while (i != rear) {
+            cout << arr[i] << " ";
+            i = (i + 1) % MAX_SIZE;
+        }
+        cout << arr[rear] << endl;
+    }
+};
+
+int main() {
+    CircularQueue cq;
+
+    cq.insert(10);
+    cq.insert(20);
+    cq.insert(30);
+    cq.insert(40);
+
+    cq.display();
+
+    cq.remove();
+    cq.display();
+
+    return 0;
+}
